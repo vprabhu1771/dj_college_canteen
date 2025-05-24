@@ -79,7 +79,7 @@ class Category(models.Model):
 class Brand(models.Model):
     id=models.BigAutoField(primary_key=True)
     name=models.CharField(max_length=255)
-    image_path = models.ImageField (upload_to='brand',null=True,blank=True,default='no-image-available.jpg')
+    image_path = models.ImageField (upload_to='brand',null=True,blank=True,default='no_image_available.jpg')
 
     def __str__(self):
         return self.name
@@ -92,7 +92,7 @@ class Product(models.Model):
 
     name = models.CharField(max_length=255)
 
-    category=models.ForeignKey(Category,null=True,blank=True,on_delete=models.SET_NULL)
+    category=models.ForeignKey(Category,null=True,blank=True,on_delete=models.SET_NULL, related_name='products')
 
     brand=models.ForeignKey(Brand,null=True,blank=True,on_delete=models.SET_NULL)
 
@@ -102,7 +102,7 @@ class Product(models.Model):
 
     alert_stock=models.IntegerField(null=True,blank=True)
 
-    image_path = models.ImageField(upload_to='product',null=True,blank=True,default='no-image-available.jpg')
+    image_path = models.ImageField(upload_to='product',null=True,blank=True,default='no_image_available.jpg')
 
     def __str__(self):
         return self.name
