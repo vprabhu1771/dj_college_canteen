@@ -1,0 +1,45 @@
+<!-- templates/frontend/auth/register.html -->
+{% extends 'frontend/layout/app.html' %}
+
+{% block title %}
+
+{{ page_title }}
+
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <h3>Register</h3>
+      <form method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label>Email</label>
+          <input type="email" name="email" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label>Phone</label>
+          <input type="text" name="phone" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label>Gender</label>
+          <select name="gender" class="form-select">
+            <option value="MALE">Male</option>
+            <option value="FEMALE">Female</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label>Password</label>
+          <input type="password" name="password" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label>Confirm Password</label>
+          <input type="password" name="confirmPassword" class="form-control" required>
+        </div>
+        <button class="btn btn-success w-100">Register</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
