@@ -1,0 +1,50 @@
+{% extends 'frontend/layout/app.html' %}
+{% load custom_filters %}
+
+{% block title %}
+
+{{ page_title }}
+
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2>Your Cart</h2>
+  {% if cart_items %}
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Qty</th>
+          <th>Price</th>
+          <th>Total</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in cart_items %}
+        <tr>
+          <td>{{ row.product.name }}</td>
+          <td>{{ row.qty }}</td>
+          <td>₹{{ row.product.price }} × {{ row.qty }} = ₹{{ row.product.price|mul:row.qty }}</td>
+          <td>₹{{ row.product.price }}</td>
+          <td>
+            <a href="{% url 'increase_quantity' row.id %}" class="btn btn-sm btn-success">+</a>
+            <a href="{% url 'decrease_quantity' row.id %}" class="btn btn-sm btn-warning">-</a>
+            <a href="{% url 'remove_from_cart' row.id %}" class="btn btn-sm btn-danger">Remove</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="text-end">
+      <p><strong>Grand Total:</strong> ₹{{ grand_total }}</p>
+      <a href="{% url 'clear_cart' %}" class="btn btn-danger">Clear Cart</a>
+      <a href="{% url 'proceed_to_checkout' %}" class="btn btn-primary">Proceed to Checkout</a>
+    </div>
+  {% else %}
+    <p>Your cart is empty.</p>
+  {% endif %}
+</div>
+{% endblock %}
