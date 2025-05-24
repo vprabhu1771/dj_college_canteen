@@ -1,0 +1,52 @@
+<!-- templates/frontend/order.html -->
+{% extends 'frontend/layout/app.html' %}
+{% load custom_filters %}
+
+{% block title %}
+
+{{ page_title }}
+
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2>Checkout</h2>
+  <form method="POST" action="{% url 'place_order' %}">
+    {% csrf_token %}
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Qty</th>
+          <th>Price</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in cart_items %}
+        <tr>
+          <td>{{ row.product.name }}</td>
+          <td>{{ row.qty }}</td>
+          <td>₹{{ row.product.price }}</td>
+          <td>₹{{ row.product.price }} × {{ row.qty }} = ₹{{ row.product.price|mul:row.qty }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <p><strong>Subtotal:</strong> ₹{{ subtotal }}</p>
+    <p><strong>Shipping:</strong> ₹{{ shipping }}</p>
+    <p><strong>Total:</strong> ₹{{ total }}</p>
+
+    <div class="mb-3">
+      <label>Payment Method</label>
+      <select name="payment_method" class="form-select">
+        <option value="UPI">UPI</option>
+        <option value="CASH">Cash on Delivery</option>
+        <option value="CARD">Card</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-success w-100">Place Order</button>
+  </form>
+</div>
+{% endblock %}
